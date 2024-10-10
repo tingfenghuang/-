@@ -5,7 +5,7 @@
         <RouterLink to="/">小兔鲜</RouterLink>
       </h1>
       <ul class="app-header-nav">
-        <li v-for="item in category" :key="item.id">
+        <li v-for="item in categoryList" :key="item.id">
           <RouterLink :to="`/category/${item.id}`">{{ item.name }}</RouterLink>
         </li>
       </ul>
@@ -20,21 +20,13 @@
 </template>
 <script setup>
 import {ref,onMounted} from 'vue'
-import { getCategoryHead } from '@/apis/getCategory'
-import { ElMessage } from 'element-plus'
+import { useCategoryStore } from '@/stores/category'
+const {categoryList}= useCategoryStore()
 
 
-const category = ref([])
-onMounted(()=>{
-    getCategoryHead().then(res=>{
 
-        if(res.code==='1'){
-            category.value = res.result
-        }else{
-            ElMessage.error(res.message)
-        }
-    })
-})
+
+
 </script>
 
 

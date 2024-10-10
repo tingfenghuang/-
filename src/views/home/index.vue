@@ -4,4 +4,9 @@
     </div>
 </template>
 <script setup></script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.home{
+    height: 100000px;
+}
+
+</style>
