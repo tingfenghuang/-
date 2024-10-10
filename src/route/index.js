@@ -4,6 +4,7 @@ import Login from "@/views/login/index.vue"
 import Home from '@/views/home/index.vue'
 import Category from '@/views/category/index.vue'
 
+
 const router = createRouter({
     history: createWebHistory(),
     routes: [
