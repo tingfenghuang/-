@@ -12,3 +12,6 @@ export const getHot = () => {
         method: 'get'
     })
 }
+export const getGoods = () => {
+    return http.get('/home/goods')
+}
