@@ -18,9 +18,9 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { getBanner } from '@/apis/getBanner'
+import { getBanner } from '@/apis/home'
 
-const imagesList = ref([1, 2, 3, 4, 5])
+const imagesList = ref([])
 const min = ref([])
 const images = ref(null)
 
