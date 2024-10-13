@@ -20,7 +20,7 @@
 import { ref, onMounted } from 'vue'
 import { getBanner } from '@/apis/home'
 
-const imagesList = ref([])
+const imagesList = ref([1, 2, 3, 4, 5])
 const min = ref([])
 const images = ref(null)
 
@@ -32,10 +32,10 @@ const set = ref(null)
 
 
 const createSetInterval = () => {
-    // set.value = setInterval(() => {
-    //     currentIndex.value++
-    //     updateImages()
-    // }, 2000)
+    set.value = setInterval(() => {
+        currentIndex.value++
+        updateImages()
+    }, 2000)
 }
 const turnLeft = () => {
     currentIndex.value--
@@ -104,9 +104,9 @@ const updateImages = () => {
 getBanner().then((res) => {
 
     imagesList.value = res.result
-    imagesList.value.forEach((item, index) => {
-        console.log(item, index)
-    })
+    // imagesList.value.forEach((item, index) => {
+    //     console.log(item, index)
+    // })
 
 })
 
@@ -143,7 +143,7 @@ onMounted(() => {
         transition: transform 0.2s;
 
         .img {
-            width: calc(100% / 6);//为什么要设置成100%？？
+            width: calc(100% / 6);
             background-size: cover;
         }
     }

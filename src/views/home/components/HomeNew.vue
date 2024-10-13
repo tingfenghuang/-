@@ -24,7 +24,7 @@ import { getNew } from '@/apis/home'
 const newList = ref([])
 onMounted(async () => {
     const res = await getNew()
-    newList.value = res.result
+    newList.value = res.result 
 })
 
 </script>

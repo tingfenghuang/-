@@ -6,3 +6,9 @@ export const getNew = () => {
     return http.get('/home/new')
 
 }
+export const getHot = () => {
+    return http({
+        url: '/home/hot',
+        method: 'get'
+    })
+}
