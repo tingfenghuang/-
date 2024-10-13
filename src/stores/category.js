@@ -10,6 +10,8 @@ export const useCategoryStore = defineStore('category', () => {
         getCategoryHead().then(res => {
             if (res.code === '1') {
                 categoryList.value = res.result
+            } else {
+                // ElMessage.error(res.msg)
             }
         })
     }
