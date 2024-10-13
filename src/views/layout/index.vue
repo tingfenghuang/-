@@ -15,7 +15,6 @@ import Header from './components/header.vue'
 import Footer from './components/footer.vue'
 import NavFix from './components/navFix.vue'
 import { useCategoryStore } from '@/stores/category'
-
 const { getCategoryList } = useCategoryStore()
 
 
