@@ -41,41 +41,14 @@
     </div>
 </template>
 <script setup>
-import { ref, onMounted } from 'vue'
-import { getCategoryData } from '@/apis/category'
-import { useRoute,onBeforeRouteUpdate } from 'vue-router'
-import { getBanner } from '@/apis/home'
+
+
+import { useBanner } from './hooks/useBanner'
+import { useCategory } from './hooks/useCategory'
 import GoodItem from '@/components/GoodItem.vue'
-const route = useRoute()//获取路由参数
-const categoryData = ref({})
-const bannerList = ref([])
-const params = {
-    distributionSite: "2"
-}
-//路由缓存的原因：只有在路由参数变化时会导致组件服用，不会使组件的生命周期重新执行，
-//所以需要使用onBeforeRouteUpdate
+const { bannerList } = useBanner()
+const { categoryData } = useCategory()
 
-//在路由参数变化时可以重新发送请求
-onBeforeRouteUpdate((to, from) => {
-    // to和from都是路由对象
-    useGetCategoryData(to.params.id)
-})
-
-const useGetCategoryData = (id) => {
-    getCategoryData(id).then(res => {
-        categoryData.value = res.result
-    })
-
-}
-const useGetBanner = (params) => {
-    getBanner(params).then(res => {
-        bannerList.value = res.result
-    })
-}
-onMounted(() => {
-    useGetCategoryData(route.params.id)
-    useGetBanner(params)
-})
 
 
 </script>
