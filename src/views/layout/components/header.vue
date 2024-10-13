@@ -6,7 +6,7 @@
       </h1>
       <ul class="app-header-nav">
         <li v-for="item in categoryList" :key="item.id">
-          <RouterLink :to="`/category/${item.id}`">{{ item.name }}</RouterLink>
+         <RouterLink active-class="active" :to="`/category/${item.id}`">{{ item.name }}</RouterLink>
         </li>
       </ul>
       <div class="search">
@@ -72,7 +72,6 @@ const {categoryList}= useCategoryStore()
             border-bottom: 2px solid $xtxColor;
           }
 
-          ;
 
           .active {
             color: $xtxColor;

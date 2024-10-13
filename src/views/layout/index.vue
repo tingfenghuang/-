@@ -2,6 +2,8 @@
  <LayoutNav/>
 
  <Header />
+ <!-- 添加key破坏服用机制 -->
+ <!-- <RouterView  :key="$route.fullPath"/> -->
  <RouterView />
  <Footer />
  <NavFix />

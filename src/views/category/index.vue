@@ -16,6 +16,26 @@
                     </el-carousel-item>
                 </el-carousel>
             </div>
+            <!-- 分类 -->
+            <div class="sub-list">
+                <h3>全部分类</h3>
+                <ul>
+                    <li v-for="i in categoryData.children" :key="i.id">
+                        <RouterLink to="/">
+                            <img :src="i.picture" />
+                            <p>{{ i.name }}</p>
+                        </RouterLink>
+                    </li>
+                </ul>
+            </div>
+            <div class="ref-goods" v-for="item in categoryData.children" :key="item.id">
+                <div class="head">
+                    <h3>- {{ item.name }}-</h3>
+                </div>
+                <div class="body">
+                    <GoodItem v-for="good in item.goods" :good="good" :key="good.id" />
+                </div>
+            </div>
 
         </div>
     </div>
@@ -23,17 +43,26 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { getCategoryData } from '@/apis/category'
-import { useRoute } from 'vue-router'
+import { useRoute,onBeforeRouteUpdate } from 'vue-router'
 import { getBanner } from '@/apis/home'
+import GoodItem from '@/components/GoodItem.vue'
 const route = useRoute()//获取路由参数
 const categoryData = ref({})
 const bannerList = ref([])
 const params = {
     distributionSite: "2"
 }
+//路由缓存的原因：只有在路由参数变化时会导致组件服用，不会使组件的生命周期重新执行，
+//所以需要使用onBeforeRouteUpdate
 
-const useGetCategoryData = () => {
-    getCategoryData(route.params.id).then(res => {
+//在路由参数变化时可以重新发送请求
+onBeforeRouteUpdate((to, from) => {
+    // to和from都是路由对象
+    useGetCategoryData(to.params.id)
+})
+
+const useGetCategoryData = (id) => {
+    getCategoryData(id).then(res => {
         categoryData.value = res.result
     })
 
@@ -44,7 +73,7 @@ const useGetBanner = (params) => {
     })
 }
 onMounted(() => {
-    useGetCategoryData()
+    useGetCategoryData(route.params.id)
     useGetBanner(params)
 })
 
