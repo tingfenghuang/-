@@ -41,7 +41,7 @@ const { categoryList } = useCategoryStore()
     background-color: rgba($color: #000000, $alpha: 0.8);
     position: relative;
     z-index: 99;
-    border-radius: 15px 0 0 15px;
+    // border-radius: 15px 0 0 15px;
 
 
     .menu {

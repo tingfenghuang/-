@@ -1,7 +1,4 @@
-<script setup>
 
-
-</script>
 
 <template>
   <div class="container ">
@@ -9,9 +6,9 @@
     <div class="bread-container">
       <el-breadcrumb separator=">">
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item :to="{ path: '/' }">居家
+        <el-breadcrumb-item :to="{ path: '/category/' + subCategoryData.parentId }">{{ subCategoryData.parentName }}
         </el-breadcrumb-item>
-        <el-breadcrumb-item>居家生活用品</el-breadcrumb-item>
+        <el-breadcrumb-item>{{ subCategoryData.name }}</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="sub-container">
@@ -27,6 +24,26 @@
   </div>
 
 </template>
+<script setup>
+import { getSubCategoryData } from '@/apis/category'
+import { ref ,onMounted } from 'vue'
+import { useRoute } from 'vue-router'
+const id = useRoute().params.id
+const subCategoryData = ref({})
+const useGetSubCategoryData = async () => {
+    const res = await getSubCategoryData(id)
+    subCategoryData.value = res.result
+    console.log(subCategoryData.value)
+}
+onMounted(() => {
+    useGetSubCategoryData()
+})
+
+
+
+
+
+</script>
 
 
 

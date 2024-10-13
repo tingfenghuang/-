@@ -8,3 +8,12 @@ export const getCategoryData = (id) => {
         }
     })
 }
+export const getSubCategoryData = (id) => {
+    return http({
+        url: "/category/sub/filter",
+        method: "get",
+        params: {
+            id
+        }
+    })
+}
