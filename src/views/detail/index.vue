@@ -17,6 +17,7 @@
           <div class="goods-info">
             <div class="media">
               <!-- 图片预览区 -->
+               <imgView />
 
               <!-- 统计数量 -->
               <ul class="goods-sales">
@@ -116,6 +117,7 @@ import { ref,onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { getDetail } from '@/apis/detail'
 import DetailHot from './Components/DetailHot.vue'
+import imgView from '@/components/imgView/index.vue'
 const route= useRoute()
 const goods = ref({})//数据返回之前是没有数据的
 const useGetDetail = async () => {
