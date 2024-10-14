@@ -20,7 +20,12 @@ export const useSubCategory = () => {
     const useGetSubCategoryList = async () => {
         const res = await getSubCategoryList(params.value)
         subCategoryList.value = res.result.items
-        console.log(subCategoryList.value)
+        // console.log(subCategoryList.value)
+    }
+    const tabChange = () => {
+        console.log('change')
+        params.value.page = 1
+        useGetSubCategoryList(params.value)
     }
     onMounted(() => {
         useGetSubCategoryData()
@@ -29,5 +34,7 @@ export const useSubCategory = () => {
     return {
         subCategoryData,
         subCategoryList,
+        params,
+        tabChange
     }
 }

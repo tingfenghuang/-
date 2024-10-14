@@ -12,7 +12,7 @@
       </el-breadcrumb>
     </div>
     <div class="sub-container">
-      <el-tabs>
+      <el-tabs v-model="params.sortField" @tab-change="tabChange()">
         <el-tab-pane label="最新商品" name="publishTime"></el-tab-pane>
         <el-tab-pane label="最高人气" name="orderNum"></el-tab-pane>
         <el-tab-pane label="评论最多" name="evaluateNum"></el-tab-pane>
@@ -27,7 +27,7 @@
 <script setup>
 import { useSubCategory } from './hooks/useSubCategory'
 import GoodItem from '@/components/GoodItem.vue'
-const { subCategoryData ,subCategoryList} = useSubCategory()
+const { subCategoryData ,subCategoryList,params,tabChange} = useSubCategory()
 
 
 
