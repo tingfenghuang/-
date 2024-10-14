@@ -17,7 +17,7 @@
         <el-tab-pane label="最高人气" name="orderNum"></el-tab-pane>
         <el-tab-pane label="评论最多" name="evaluateNum"></el-tab-pane>
       </el-tabs>
-      <div class="body">
+      <div class="body"  v-infinite-scroll="load" :infinite-scroll-disabled="disbaled">
         <GoodItem v-for="item in subCategoryList" :key="item.id" :good="item"></GoodItem>
       </div>
     </div>
@@ -27,7 +27,7 @@
 <script setup>
 import { useSubCategory } from './hooks/useSubCategory'
 import GoodItem from '@/components/GoodItem.vue'
-const { subCategoryData ,subCategoryList,params,tabChange} = useSubCategory()
+const { subCategoryData ,subCategoryList,params,tabChange,load,disbaled} = useSubCategory()
 
 
 
