@@ -8,3 +8,15 @@ export const getDetail = (id) => {
         }
     })
 }
+export const getDetailHot = ({ id, type, limit }) => {
+    return http({
+        url: '/goods/hot',
+        method: 'get',
+        params: {
+            id,
+            type,
+            limit
+        }
+    })
+
+}

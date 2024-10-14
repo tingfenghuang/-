@@ -88,19 +88,21 @@
                 <div class="goods-detail">
                   <!-- 属性 -->
                   <ul class="attrs">
-                    <li v-for="item in goods.details.properties" :key="item.value">
+                    <li v-for="item in goods.details?.properties" :key="item.value">
                       <span class="dt">{{ item.name }}</span>
                       <span class="dd">{{ item.value }}</span>
                     </li>
                   </ul>
                   <!-- 图片 -->
-                   <img v-for="item in goods.details.pictures" :key="item" :src="item" alt="">
+                   <img v-for="item in goods.details?.pictures" :key="item" :src="item" alt="">
 
                 </div>
               </div>
             </div>
             <!-- 24热榜+专题推荐 -->
             <div class="goods-aside">
+                <DetailHot />
+                <DetailHot :hot-type="2" />
 
             </div>
           </div>
@@ -113,12 +115,13 @@
 import { ref,onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { getDetail } from '@/apis/detail'
+import DetailHot from './Components/DetailHot.vue'
 const route= useRoute()
 const goods = ref({})//数据返回之前是没有数据的
 const useGetDetail = async () => {
   const { result } = await getDetail(route.params.id)
   goods.value = result
-  console.log(goods.value)
+//   console.log(goods.value)
 }
 onMounted(()=>useGetDetail())
 </script>
