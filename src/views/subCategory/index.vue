@@ -18,26 +18,16 @@
         <el-tab-pane label="评论最多" name="evaluateNum"></el-tab-pane>
       </el-tabs>
       <div class="body">
-         <!-- 商品列表-->
+        <GoodItem v-for="item in subCategoryList" :key="item.id" :good="item"></GoodItem>
       </div>
     </div>
   </div>
 
 </template>
 <script setup>
-import { getSubCategoryData } from '@/apis/category'
-import { ref ,onMounted } from 'vue'
-import { useRoute } from 'vue-router'
-const id = useRoute().params.id
-const subCategoryData = ref({})
-const useGetSubCategoryData = async () => {
-    const res = await getSubCategoryData(id)
-    subCategoryData.value = res.result
-    console.log(subCategoryData.value)
-}
-onMounted(() => {
-    useGetSubCategoryData()
-})
+import { useSubCategory } from './hooks/useSubCategory'
+import GoodItem from '@/components/GoodItem.vue'
+const { subCategoryData ,subCategoryList} = useSubCategory()
 
 
 

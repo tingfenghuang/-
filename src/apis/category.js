@@ -17,3 +17,11 @@ export const getSubCategoryData = (id) => {
         }
     })
 }
+export const getSubCategoryList = (data) => {
+    return http({
+        url: '/category/goods/temporary',
+        method: "post",
+        data
+
+    })
+}
