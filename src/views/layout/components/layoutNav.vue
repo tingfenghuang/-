@@ -20,13 +20,10 @@
 
 </template>
 <script setup>
-import { ref } from 'vue'
-import { ElPopconfirm } from 'element-plus'
-
-
-
-const isLoggedIn = ref(false)
-
+import { ref ,toRefs} from 'vue'
+import { useUserStore } from '@/stores/user'
+const { isLoggedIn , userInfo} = toRefs(useUserStore())
+console.log(userInfo.value)
 </script>
 <style lang="scss">
 .app-topnav {

@@ -16,6 +16,7 @@ http.interceptors.request.use((config) => {
 http.interceptors.response.use((res) => {
     return res.data
 }, (err) => {
+    console.log(err)
     //统一错误提示
     ElMessage({
         message: err.response.data.message,

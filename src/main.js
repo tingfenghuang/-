@@ -5,10 +5,13 @@ import '@/styles/common.scss'
 import { createPinia } from 'pinia'
 import { lazyLoad } from './dircetives'
 import { componentsPlugin } from './components'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
 
 const app = createApp(App)
-app.use(createPinia())
+const pinia = createPinia()
+pinia.use(piniaPluginPersistedstate)
+app.use(pinia)
 app.use(lazyLoad)
 app.use(componentsPlugin)
 
