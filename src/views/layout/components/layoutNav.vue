@@ -2,12 +2,12 @@
     <nav class="app-topnav">
         <div class="container">
              <ul>
-                <template v-if="isLoggedIn">
-                    <li><a href="#"><i class="iconfont icon-user">Taylor</i></a></li>
+                <template v-if="userInfo.token">
+                    <li><a href="#"><i class="iconfont icon-user">{{ userInfo.nickname }}</i></a></li>
                     <li><a href="#">My Order</a></li>
-                    <li><a href="#">My Favorite</a></li>
-                    <li><a href="#">Message</a></li>
-                    <li><a href="#">Setting</a></li>
+                 
+                   <li><a href="#">Member Center</a></li>
+                  
                     <li><a href="#">Logout</a></li>
                 </template>
                 <template v-else>
@@ -22,8 +22,8 @@
 <script setup>
 import { ref ,toRefs} from 'vue'
 import { useUserStore } from '@/stores/user'
-const { isLoggedIn , userInfo} = toRefs(useUserStore())
-console.log(userInfo.value)
+const { userInfo} = toRefs(useUserStore())
+
 </script>
 <style lang="scss">
 .app-topnav {
