@@ -58,10 +58,14 @@
 <script setup>
 import { ElMessage } from 'element-plus';
 import { ref } from 'vue'
+import { login } from '@/apis/user'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 const formRef = ref(null)
 const form = ref({
-    account: '',
-    password: ''
+    account: '13012345682',
+    password: '123456',
+    agree: true
 })
 const validateAccount = (rule, value, callback) => {
     if (!value) {
@@ -101,8 +105,21 @@ const rules = ref({
 })
 const submit = () => {
     formRef.value.validate((valid) => {
+        const { account, password } = form.value
         if (valid) {
-            console.log('submit!')
+   
+           login({ account, password}).then(res=>{
+               if(res.code==='1'){
+                   ElMessage({
+                       message: '登录成功',
+                       type: 'success',
+                   })
+                   router.replace({path:'/'});
+               }else{
+                 
+               }
+
+           })
         } else {
            ElMessage({
                 message: '请输入正确的信息',
