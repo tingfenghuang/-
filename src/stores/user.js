@@ -14,8 +14,11 @@ export const useUserStore = defineStore('user', () => {
             }
         })
     }
+    const logoutAction = () => {
+        userInfo.value = {}
+    }
     return {
-        userInfo, loginAction,
+        userInfo, loginAction, logoutAction
     }
 }, {
     persist: true
