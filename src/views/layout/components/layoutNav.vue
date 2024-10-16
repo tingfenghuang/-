@@ -11,7 +11,7 @@
                     <li><a href="#">Logout</a></li>
                 </template>
                 <template v-else>
-                    <li><a href="#">Please Login</a></li>
+                    <li><a href="#" @click="$router.push('/login')">Please Login</a></li>
                     <li><a href="#">Register</a></li>
                 </template>
              </ul>
@@ -25,7 +25,7 @@ import { ElPopconfirm } from 'element-plus'
 
 
 
-const isLoggedIn = ref(true)
+const isLoggedIn = ref(false)
 
 </script>
 <style lang="scss">
