@@ -14,13 +14,16 @@
         <input type="text" placeholder="Search...">
       </div>
       <!-- 头部购物车 -->
+      <HeaderShop />
+
 
     </div>
   </header>
 </template>
 <script setup>
-import {ref,onMounted} from 'vue'
+
 import { useCategoryStore } from '@/stores/category'
+import HeaderShop from './headerShop.vue'
 const {categoryList}= useCategoryStore()
 
 
