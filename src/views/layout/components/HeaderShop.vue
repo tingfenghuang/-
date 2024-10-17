@@ -31,14 +31,13 @@
           <p>共{{total}}件商品</p>
           <p>&yen; {{ allPrice.toFixed(2) }} </p>
         </div>
-        <el-button size="large" type="primary" color="#27ba9b" style="color: white;" >去购物车结算</el-button>
+        <el-button size="large" type="primary" color="#27ba9b" style="color: white;" @click="$router.push('/cartList')">去购物车结算</el-button>
       </div>
     </div>
 </div>
 </template>
 <script setup>
 import { useCartStore } from "@/stores/cartStore"
-import { ref ,computed} from "vue"
 import { storeToRefs } from "pinia"
 const { cartList,total,allPrice} = storeToRefs(useCartStore())
 const { delCart } = useCartStore()
