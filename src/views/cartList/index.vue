@@ -6,7 +6,7 @@
           <thead>
             <tr>
               <th width="120">
-                <el-checkbox/>
+                <el-checkbox :model-value="isAll" @change="checkAll" />
               </th>
               <th width="400">商品信息</th>
               <th width="220">单价</th>
@@ -79,11 +79,15 @@
 <script setup>
 import { useCartStore } from '@/stores/cartStore'
 import { storeToRefs } from 'pinia'
-const { cartList ,total, allPrice } = storeToRefs(useCartStore())
+const { cartList ,total, allPrice ,isAll} = storeToRefs(useCartStore())
 const singleCheck= (i,selected) => {
     useCartStore().singleChecked(i.skuId,selected)
   
 }
+const checkAll = (selected) => {
+    useCartStore().selectAll(selected)
+}
+
 
 </script>
 
