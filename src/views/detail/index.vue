@@ -130,7 +130,7 @@ const goods = ref({})//数据返回之前是没有数据的
 const count = ref(1)
 let skuObj={}
 const countChange = (value) => {
-  console.log(value)
+  // console.log(value)
 }
 const useGetDetail = async () => {
   const { result } = await getDetail(route.params.id)

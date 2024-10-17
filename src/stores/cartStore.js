@@ -29,9 +29,17 @@ export const useCartStore = defineStore('Cart', () => {
             return p + c.count * c.price
         }, 0)
     })
+    const singleChecked = (skuId, selected) => {
+        const isInCart = cartList.value.find((item) => {
+            return skuId === item.skuId
+        })
+        isInCart.selected = selected
+        console.log(isInCart)
+    }
     return {
         cartList,
-        addCart, delCart, total, allPrice
+        addCart, delCart, total, allPrice,
+        singleChecked
     }
 
 

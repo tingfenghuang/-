@@ -19,7 +19,7 @@
           <tbody>
             <tr v-for="i in cartList" :key="i.id">
               <td>
-                <el-checkbox />
+                <el-checkbox :model-value="i.selected" @change="(selected)=>singleCheck(i,selected)" />
               </td>
               <td>
                 <div class="goods">
@@ -66,8 +66,8 @@
       <!-- 操作栏 -->
       <div class="action">
         <div class="batch">
-          共 10 件商品，已选择 2 件，商品合计：
-          <span class="red">¥ 200.00 </span>
+          共 {{ total }} 件商品，已选择 2 件，商品合计：
+          <span class="red">¥ {{ allPrice }} </span>
         </div>
         <div class="total">
           <el-button size="large" type="primary" color="#27ba9b" style="color: white;">下单结算</el-button>
@@ -78,7 +78,13 @@
 </template>
 <script setup>
 import { useCartStore } from '@/stores/cartStore'
-const { cartList } = useCartStore()
+import { storeToRefs } from 'pinia'
+const { cartList ,total, allPrice } = storeToRefs(useCartStore())
+const singleCheck= (i,selected) => {
+    useCartStore().singleChecked(i.skuId,selected)
+  
+}
+
 </script>
 
 <style scoped lang="scss">

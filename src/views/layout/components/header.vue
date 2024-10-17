@@ -23,7 +23,7 @@
 <script setup>
 
 import { useCategoryStore } from '@/stores/category'
-import HeaderShop from './headerShop.vue'
+import HeaderShop from './HeaderShop.vue'
 const {categoryList}= useCategoryStore()
 
 
