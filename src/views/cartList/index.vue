@@ -66,8 +66,8 @@
       <!-- 操作栏 -->
       <div class="action">
         <div class="batch">
-          共 {{ total }} 件商品，已选择 2 件，商品合计：
-          <span class="red">¥ {{ allPrice }} </span>
+          共 {{ total }} 件商品，已选择 {{ selectedCount }} 件，商品合计：
+          <span class="red">¥ {{ selectedPrice.toFixed(2) }} </span>
         </div>
         <div class="total">
           <el-button size="large" type="primary" color="#27ba9b" style="color: white;">下单结算</el-button>
@@ -79,7 +79,7 @@
 <script setup>
 import { useCartStore } from '@/stores/cartStore'
 import { storeToRefs } from 'pinia'
-const { cartList ,total, allPrice ,isAll} = storeToRefs(useCartStore())
+const { cartList ,total, allPrice ,isAll,selectedCount,selectedPrice} = storeToRefs(useCartStore())
 const singleCheck= (i,selected) => {
     useCartStore().singleChecked(i.skuId,selected)
   
