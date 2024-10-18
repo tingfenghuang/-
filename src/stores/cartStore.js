@@ -94,11 +94,14 @@ export const useCartStore = defineStore('Cart', () => {
         }, 0)
 
     })
+    const clearCart = () => {
+        cartList.value = []
+    }
     return {
         cartList,
         addCart, delCart, total, allPrice,
         singleChecked, isAll, selectAll, selectedCount
-        , selectedPrice
+        , selectedPrice, clearCart, getNewCartList
     }
 
 
