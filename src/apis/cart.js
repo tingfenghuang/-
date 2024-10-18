@@ -5,3 +5,14 @@ export const insertCart = (data) => {
 export const getCart = (data) => {
     return http.get("/member/cart", data)
 }
+export const deleteCart = (ids) => {
+    console.log(ids)
+
+    return http({
+        url: "/member/cart",
+        method: "delete",
+        data: {
+            ids
+        }
+    })
+}

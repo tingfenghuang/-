@@ -1,22 +1,25 @@
 import { defineStore } from "pinia"
 import { ref, computed } from "vue"
 import { useUserStore } from "./user"
-import { insertCart, getCart } from "@/apis/cart"
+import { insertCart, getCart, deleteCart } from "@/apis/cart"
 export const useCartStore = defineStore('Cart', () => {
     const userStore = useUserStore()
     const isLogin = computed(() => {
         return userStore.userInfo.token
     })
     const cartList = ref([])
+    const getNewCartList = () => {
+        getCart().then(res => {
+            cartList.value = res.result || []
+        })
+    }
     const addCart = (goods) => {
         if (isLogin.value) {
             const { skuId, count } = goods
             insertCart({ skuId, count }).then(
                 res => {
-                    getCart().then(res => {
-                        cartList.value = res.result || []
-                        console.log(cartList.value, 2)
-                    })
+                    getNewCartList()
+
                 }
             )
 
@@ -35,10 +38,19 @@ export const useCartStore = defineStore('Cart', () => {
 
     }
     const delCart = (skuId) => {
-        const index = cartList.value.findIndex((item) => {
-            return skuId === item.skuId
-        })
-        cartList.value.splice(index, 1)
+        if (isLogin.value) {
+            //TODO:删除购物车接口
+
+            deleteCart([skuId]).then(res => {
+                getNewCartList()
+            })
+
+        } else {
+            const index = cartList.value.findIndex((item) => {
+                return skuId === item.skuId
+            })
+            cartList.value.splice(index, 1)
+        }
     }
     const total = computed(() => {
         return cartList.value.reduce((p, c) => {

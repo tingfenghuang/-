@@ -79,7 +79,8 @@
 <script setup>
 import { useCartStore } from '@/stores/cartStore'
 import { storeToRefs } from 'pinia'
-const { cartList ,total, allPrice ,isAll,selectedCount,selectedPrice} = storeToRefs(useCartStore())
+const { cartList ,total,isAll,selectedCount,selectedPrice} = storeToRefs(useCartStore())
+const { delCart } = useCartStore()
 const singleCheck= (i,selected) => {
     useCartStore().singleChecked(i.skuId,selected)
   
