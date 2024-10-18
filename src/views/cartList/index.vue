@@ -42,7 +42,7 @@
               </td>
               <td class="tc">
                 <p>
-                  <el-popconfirm title="确认删除吗?" confirm-button-text="确认" cancel-button-text="取消" @confirm="delCart(i)" confirm-button-type="danger" >
+                  <el-popconfirm title="确认删除吗?" confirm-button-text="确认" cancel-button-text="取消" @confirm="delCart(i.skuId)" confirm-button-type="danger" >
                     <template #reference>
                       <a href="javascript:;">删除</a>
                     </template>
@@ -70,7 +70,7 @@
           <span class="red">¥ {{ selectedPrice.toFixed(2) }} </span>
         </div>
         <div class="total">
-          <el-button size="large" type="primary" color="#27ba9b" style="color: white;">下单结算</el-button>
+          <el-button size="large" type="primary" color="#27ba9b" style="color: white;" @click="$router.push('/checkout')">下单结算</el-button>
         </div>
       </div>
     </div>

@@ -16,3 +16,9 @@ export const deleteCart = (ids) => {
         }
     })
 }
+export const mergeCart = (data) => {
+    return http.post("/member/cart/merge", data)
+}
+export const getCheckoutinfo = () => {
+    return http.get('/member/order/pre')
+}
