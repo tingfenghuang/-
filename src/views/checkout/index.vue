@@ -90,45 +90,53 @@
         </div>
         <!-- 提交订单 -->
         <div class="submit">
-          <el-button type="primary" size="large" >提交订单</el-button>
+          <el-button type="primary" size="large">提交订单</el-button>
         </div>
       </div>
     </div>
   </div>
   <!-- 切换地址 -->
-     <el-dialog title="切换收货地址" width="30%" center v-model="toggleFlag">
-  <div class="addressWrapper">
-    <div class="text item" v-for="item in checkInfo.userAddresses"  :key="item.id">
-      <ul>
-      <li><span>收<i />货<i />人：</span>{{ item.receiver }} </li>
-      <li><span>联系方式：</span>{{ item.contact }}</li>
-      <li><span>收货地址：</span>{{ item.fullLocation + item.address }}</li>
-      </ul>
+  <el-dialog title="切换收货地址" width="30%" center v-model="toggleFlag">
+    <div class="addressWrapper">
+      <div class="text item" :class="{active:activeAddress.id===item.id}"  @click="swithcAddress(item)" v-for="item in checkInfo.userAddresses" :key="item.id" >
+        <ul>
+          <li><span>收<i />货<i />人：</span>{{ item.receiver }} </li>
+          <li><span>联系方式：</span>{{ item.contact }}</li>
+          <li><span>收货地址：</span>{{ item.fullLocation + item.address }}</li>
+        </ul>
+      </div>
     </div>
-  </div>
-  <template #footer>
-    <span class="dialog-footer">
-      <el-button>取消</el-button>
-      <el-button type="primary">确定</el-button>
-    </span>
-  </template>
-</el-dialog>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="toggleFlag = false">取消</el-button>
+        <el-button type="primary" @click="switchConfirm">确定</el-button>
+      </span>
+    </template>
+  </el-dialog>
   <!-- 添加地址 -->
 
 </template>
 <script setup>
-import { ref,reactive,onMounted } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { getCheckoutinfo } from '@/apis/checkout'
-const curAddress = reactive({}) 
-const checkInfo = reactive({})  
-
-const toggleFlag = ref(false)  
-const addFlag = ref(false)  
+const curAddress = reactive({})
+const checkInfo = reactive({})
+const activeAddress = reactive({})
+const toggleFlag = ref(false)
+const addFlag = ref(false)
 const callGetCheckoutinfo = () => {
   getCheckoutinfo().then(res => {
     Object.assign(checkInfo, res.result)
-    Object.assign(curAddress, checkInfo.userAddresses.find(item => item.isDefault === 0)) 
+    Object.assign(curAddress, checkInfo.userAddresses.find(item => item.isDefault === 0))
   })
+}
+const swithcAddress = (item) => {
+    Object.assign(activeAddress, item)
+}
+const switchConfirm=()=>{
+  toggleFlag.value=false
+  Object.assign(curAddress,activeAddress)
+  Object.assign(activeAddress,{})
 
 }
 onMounted(() => {
