@@ -1,22 +1,8 @@
-<script setup>
-// tab列表
-const tabTypes = [
-  { name: "all", label: "全部订单" },
-  { name: "unpay", label: "待付款" },
-  { name: "deliver", label: "待发货" },
-  { name: "receive", label: "待收货" },
-  { name: "comment", label: "待评价" },
-  { name: "complete", label: "已完成" },
-  { name: "cancel", label: "已取消" }
-]
-// 订单列表
-const orderList = []
 
-</script>
 
 <template>
   <div class="order-container">
-    <el-tabs>
+    <el-tabs  @tab-change="changeTab">
       <!-- tab切换 -->
       <el-tab-pane v-for="item in tabTypes" :key="item.name" :label="item.label" />
 
@@ -103,6 +89,41 @@ const orderList = []
   </div>
 
 </template>
+<script setup>
+import { ref,onMounted } from 'vue'
+import { getUserOrder } from '@/apis/order'
+// tab列表
+const tabTypes = [
+  { name: "all", label: "全部订单" },
+  { name: "unpay", label: "待付款" },
+  { name: "deliver", label: "待发货" },
+  { name: "receive", label: "待收货" },
+  { name: "comment", label: "待评价" },
+  { name: "complete", label: "已完成" },
+  { name: "cancel", label: "已取消" }
+]
+// 订单列表
+const orderList = ref([])
+const orderPramas = ref({
+  page: 1,
+  pageSize: 1,
+  orderState: 0 
+})
+const callGetUserOrder = () => {
+    getUserOrder(orderPramas.value).then(res => {
+        orderList.value = res.result.items
+        console.log(res)
+    })
+}
+const changeTab = (type) => {
+    console.log(type)
+    orderPramas.value.orderState = type
+    callGetUserOrder()
+}
+onMounted(() => {
+    callGetUserOrder()
+})
+</script>
 
 <style scoped lang="scss">
 .order-container {
