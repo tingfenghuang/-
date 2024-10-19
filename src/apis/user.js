@@ -6,3 +6,10 @@ export const login = ({ account, password }) => {
         data: { account, password }
     })
 }
+export const getLikeList = ({ limit }) => {
+    return http({
+        url: '/goods/relevant',
+        method: 'GET',
+        params: { limit }
+    })
+}

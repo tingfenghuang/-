@@ -6,7 +6,7 @@
                     <li><a href="#"><i class="iconfont icon-user">{{ userInfo.nickname }}</i></a></li>
                     <li><a href="#">My Order</a></li>
 
-                    <li><a href="#">Member Center</a></li>
+                    <li><a href="#" @click="$router.push('/member')">Member Center</a></li>
 
                     <li>
                         <el-popconfirm title="确认登出吗?" @confirm="logout" confirm-button-text="确认"

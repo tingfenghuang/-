@@ -8,6 +8,9 @@ import Detail from '@/views/detail/index.vue'
 import CartList from '@/views/cartList/index.vue'
 import Checkout from '@/views/checkout/index.vue'
 import Pay from '@/views/pay/index.vue'
+import Member from '@/views/member/index.vue'
+import UserInfo from "@/views/member/components/UserInfo.vue"
+import UserOrder from "@/views/member/components/UserOrder.vue"
 
 
 const router = createRouter({
@@ -38,6 +41,17 @@ const router = createRouter({
             }, {
                 path: 'pay',
                 component: Pay
+            }, {
+                path: 'member',
+                component: Member,
+                children: [{
+                    path: '',
+                    component: UserInfo
+
+                }, {
+                    path: 'order',
+                    component: UserOrder
+                }]
             }]
         },
         {
