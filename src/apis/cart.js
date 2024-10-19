@@ -6,8 +6,6 @@ export const getCart = (data) => {
     return http.get("/member/cart", data)
 }
 export const deleteCart = (ids) => {
-
-
     return http({
         url: "/member/cart",
         method: "delete",
@@ -19,6 +17,4 @@ export const deleteCart = (ids) => {
 export const mergeCart = (data) => {
     return http.post("/member/cart/merge", data)
 }
-export const getCheckoutinfo = () => {
-    return http.get('/member/order/pre')
-}
+

@@ -16,7 +16,7 @@
             </div>
             <div class="action">
               <el-button size="large" @click="toggleFlag = true">切换地址</el-button>
-              <el-button size="large" @click="addFlag = true">添加地址</el-button>
+              <el-button size="large" @click="address_">添加地址</el-button>
             </div>
           </div>
         </div>
@@ -90,7 +90,7 @@
         </div>
         <!-- 提交订单 -->
         <div class="submit">
-          <el-button type="primary" size="large">提交订单</el-button>
+          <el-button type="primary" size="large" @click="getPayOrder_">提交订单</el-button>
         </div>
       </div>
     </div>
@@ -98,7 +98,7 @@
   <!-- 切换地址 -->
   <el-dialog title="切换收货地址" width="30%" center v-model="toggleFlag">
     <div class="addressWrapper">
-      <div class="text item" :class="{active:activeAddress.id===item.id}"  @click="swithcAddress(item)" v-for="item in checkInfo.userAddresses" :key="item.id" >
+      <div class="text item" :class="{active:activeAddress.id===item.id}"  @click="switchAddress(item)" v-for="item in checkInfo.userAddresses" :key="item.id" >
         <ul>
           <li><span>收<i />货<i />人：</span>{{ item.receiver }} </li>
           <li><span>联系方式：</span>{{ item.contact }}</li>
@@ -110,40 +110,127 @@
       <span class="dialog-footer">
         <el-button @click="toggleFlag = false">取消</el-button>
         <el-button type="primary" @click="switchConfirm">确定</el-button>
+        <el-button @click="deleteAddress_(activeAddress.id)" color="red" style="color:'#ffff'">删除</el-button>
       </span>
     </template>
   </el-dialog>
   <!-- 添加地址 -->
+   <el-dialog v-model="addFlag" title="添加收货地址" width="40%" center>
+    <el-form label-width="120px">
+      <el-form-item label="收货人">
+        <el-input v-model="addAddressParams.receiver"  />
+      </el-form-item>
+      <el-form-item label="手机号">
+        <el-input v-model="addAddressParams.contact" />
+      </el-form-item>
+      <el-form-item label="省份编码">
+        <el-input v-model="addAddressParams.provinceCode" />
+      </el-form-item>
+      <el-form-item label="城市编码">
+        <el-input v-model="addAddressParams.cityCode" />
+      </el-form-item>
+      <el-form-item label="区县编码">
+        <el-input v-model="addAddressParams.countyCode"/>
+      </el-form-item>
+      <el-form-item label="详细地址">
+        <el-input v-model="addAddressParams.address" />
+      </el-form-item>
+      <el-form-item label="邮编">
+        <el-input v-model="addAddressParams.postalCode" />
+      </el-form-item>
+      <el-form-item label="地址标签">
+        <el-input v-model="addAddressParams.addressTags" />
+      </el-form-item>
+      <el-form-item label="完整地址">
+        <el-input v-model="addAddressParams.fullLocation" />
+      </el-form-item>
+    </el-form>
+    <template #footer>
+       <el-button>取消</el-button>
+       <el-button color="#27ba9b" style="color: #fff;" @click="addAddressConfirm">确定</el-button>
+    </template>
+   </el-dialog>
 
 </template>
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
-import { getCheckoutinfo } from '@/apis/checkout'
+import { getCheckoutinfo ,addAddress,deleteAddress,getPayOrder} from '@/apis/checkout'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 const curAddress = reactive({})
 const checkInfo = reactive({})
 const activeAddress = reactive({})
 const toggleFlag = ref(false)
 const addFlag = ref(false)
+const addAddressParams = reactive({
+  receiver: "",
+  contact: "",
+  provinceCode: "",
+  cityCode: "",
+  countyCode: "",
+  address: "",
+  postalCode: "",
+  addressTags: "",
+  isDefault: 1,
+  fullLocation: ""
+})
+const getPayOrder_ = () => {
+  getPayOrder({
+    deliveryTimeType:1,
+    payType:1,
+    payChannel:1,
+    buyerMessage:'',
+    goods:checkInfo.goods.map(item => {
+      return {
+        skuId: item.skuId,
+        count: item.count
+      }
+    }),
+    addressId:curAddress.id
+  }).then(res => {
+    router.push({
+      path:'/pay',
+      query:{
+        id:res.result.id
+      }
+    })
+    
+  })
+}
 const callGetCheckoutinfo = () => {
   getCheckoutinfo().then(res => {
     Object.assign(checkInfo, res.result)
     Object.assign(curAddress, checkInfo.userAddresses.find(item => item.isDefault === 0))
   })
 }
-const swithcAddress = (item) => {
+const switchAddress = (item) => {
     Object.assign(activeAddress, item)
+}
+const address_=()=>{
+  addFlag.value=true
+  Object.assign(addAddressParams,{})
 }
 const switchConfirm=()=>{
   toggleFlag.value=false
   Object.assign(curAddress,activeAddress)
   Object.assign(activeAddress,{})
-
 }
+const addAddressConfirm = () => {
+  addAddress(addAddressParams).then(res => {
+    addFlag.value = false
+    callGetCheckoutinfo()
+  })
+}
+const deleteAddress_ = (id) => {
+  deleteAddress(id).then(res => {
+    toggleFlag.value = false
+    callGetCheckoutinfo()
+  })
+}
+
 onMounted(() => {
   callGetCheckoutinfo()
 })
-
-
 </script>
 <style scoped lang="scss">
 .xtx-pay-checkout-page {
